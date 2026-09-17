@@ -58,9 +58,9 @@ Dataset terdiri daripada tiga kelas bahan kitar semula:
 
 | Kelas             | Dataset |
 | ----------------- | ------: |
-| Plastic Bottle    |  6 imej |
-| Paper / Cardboard |  6 imej |
-| Aluminium Can     |  4 imej |
+| Plastic Bottle    |  171 imej |
+| Paper / Cardboard |  100 imej |
+| Aluminium Can     |  95 imej |
 
 Dataset mengambil kira variasi seperti:
 
@@ -96,7 +96,7 @@ Model melalui sekurang-kurangnya dua eksperimen dengan perubahan pada dataset, v
 
 ### Eksperimen 1 – Model Asal
 
-* Dataset: 16 imej/class
+* Dataset: 366 imej/class
 * Epoch: 50
 * Batch Size: 16
 * Learning Rate: 0.001
@@ -143,10 +143,7 @@ Object-Detection/
 │   └── sample/
 │
 ├── index.html
-├── script.js
-├── style.css
-├── README.md
-└── requirements.txt
+└──  README.md
 ```
 
 > Struktur folder boleh disesuaikan mengikut fail sebenar dalam repository.
@@ -177,12 +174,9 @@ atau jalankan menggunakan **Live Server** dalam Visual Studio Code.
 
 ### 4. Berikan Input
 
-Pilih salah satu:
-
-* Upload imej bahan kitar semula
 * Gunakan webcam
 
-Sistem akan memproses imej dan memaparkan kategori bahan serta confidence score.
+Sistem akan memproses objek dan memaparkan kategori bahan serta confidence score.
 
 ## 📷 Contoh Output
 
@@ -232,4 +226,5 @@ Penambahbaikan dibuat melalui penambahan dataset dan variasi imej serta pelarasa
 * Meningkatkan ketepatan model.
 * Menambah fungsi pengesanan bahan yang tidak dikenali.
 * Mengembangkan sistem kepada klasifikasi bahan kitar semula yang lebih menyeluruh.
+  
 Projek ini dibangunkan sebagai projek akademik untuk mengaplikasikan teknologi Artificial Intelligence, Computer Vision dan Image Classification dalam mengenal pasti kategori bahan kitar semula.
