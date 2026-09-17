@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Tong Pintar — Kesan Sampah Kitar Semula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hutan:#0A4D26;
+  --hutan-tua:#06381B;
+  --daun:#35C05B;
+  --limau:#C4F03A;
+  --krim:#FFFBEA;
+ 
+  --logam:#1E7FD6;
+  --logam-tua:#0F4F8A;
+  --kertas:#F5C20B;
+  --kertas-tua:#A67C00;
+  --plastik:#E23B2E;
+  --plastik-tua:#95170D;
+ 
+  --papar:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --teks:"Nunito","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--teks);
+  color:var(--krim);
+  background:
+    radial-gradient(120% 80% at 50% 0%, #10713A 0%, var(--hutan) 45%, var(--hutan-tua) 100%);
+  overflow:hidden;
+}
+/* corak daun halus */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.10;
+  background-image:
+    radial-gradient(circle at 12% 18%, var(--limau) 0 6px, transparent 7px),
+    radial-gradient(circle at 78% 12%, var(--limau) 0 5px, transparent 6px),
+    radial-gradient(circle at 88% 62%, var(--limau) 0 7px, transparent 8px),
+    radial-gradient(circle at 22% 78%, var(--limau) 0 5px, transparent 6px),
+    radial-gradient(circle at 55% 92%, var(--limau) 0 6px, transparent 7px);
+  background-size:100% 100%;
+}
+ 
+/* ---------- susun atur ---------- */
+.skrin{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;gap:14px}
+.sembunyi{display:none !important}
+ 
+/* ---------- skrin mula ---------- */
+.jenama{font-family:var(--papar);font-weight:800;line-height:.95;text-align:center}
+.jenama .besar{display:block;font-size:clamp(44px,11vw,96px);color:var(--limau);text-shadow:0 6px 0 rgba(0,0,0,.25)}
+.jenama .kecil{display:block;font-size:clamp(17px,4.2vw,26px);color:#DFF7E2;font-weight:600;margin-top:6px}
+.maskot{font-size:clamp(64px,18vw,120px);line-height:1;animation:lambai 2.6s ease-in-out infinite;transform-origin:70% 90%}
+@keyframes lambai{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+ 
+.butang{
+  font-family:var(--papar);font-weight:800;font-size:clamp(22px,5.5vw,32px);
+  color:var(--hutan-tua);background:var(--limau);
+  border:0;border-radius:999px;padding:18px 44px;cursor:pointer;
+  box-shadow:0 8px 0 #7FA315, 0 14px 24px rgba(0,0,0,.35);
+  transition:transform .12s, box-shadow .12s;
+}
+.butang:active{transform:translateY(6px);box-shadow:0 2px 0 #7FA315,0 6px 12px rgba(0,0,0,.35)}
+.butang:focus-visible{outline:4px solid #fff;outline-offset:4px}
+.butang.kecil{font-size:18px;padding:12px 26px;box-shadow:0 5px 0 #7FA315}
+.nota{font-size:14px;color:#BFE6C6;text-align:center;max-width:34ch;line-height:1.5}
+ 
+/* ---------- skrin imbas ---------- */
+#skrinImbas{justify-content:space-between;padding:14px 14px 18px}
+.bar-atas{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tajuk-kecil{font-family:var(--papar);font-weight:800;font-size:clamp(18px,4.6vw,26px);color:var(--limau)}
+.bintang{
+  display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.28);
+  border:2px solid rgba(196,240,58,.45);border-radius:999px;padding:7px 16px;
+  font-family:var(--papar);font-weight:800;font-size:20px;
+}
+.bintang .n{color:var(--limau);min-width:1.2ch;text-align:center}
+ 
+/* bingkai kamera */
+.bingkai{
+  position:relative;width:min(78vw,min(58vh,420px));aspect-ratio:1/1;
+  border-radius:40px;padding:10px;background:linear-gradient(160deg,#FFFFFF22,#00000033);
+  border:6px solid var(--limau);
+  box-shadow:0 0 0 8px rgba(0,0,0,.25), 0 22px 40px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+.bingkai canvas,.bingkai video{width:100%;height:100%;border-radius:28px;display:block;object-fit:cover}
+.pemuat{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-family:var(--papar);font-size:20px;color:#DFF7E2}
+.pusing{width:46px;height:46px;border:6px solid rgba(255,255,255,.2);border-top-color:var(--limau);border-radius:50%;animation:pusing 1s linear infinite}
+@keyframes pusing{to{transform:rotate(360deg)}}
+/* sudut penanda */
+.sudut{position:absolute;width:38px;height:38px;border:5px solid #fff;opacity:.85;pointer-events:none}
+.sudut.a{top:18px;left:18px;border-right:0;border-bottom:0;border-radius:18px 0 0 0}
+.sudut.b{top:18px;right:18px;border-left:0;border-bottom:0;border-radius:0 18px 0 0}
+.sudut.c{bottom:18px;left:18px;border-right:0;border-top:0;border-radius:0 0 0 18px}
+.sudut.d{bottom:18px;right:18px;border-left:0;border-top:0;border-radius:0 0 18px 0}
+ 
+.arahan{font-family:var(--papar);font-weight:600;font-size:clamp(17px,4.4vw,24px);text-align:center;color:#EAFBEE}
+ 
+/* kad tong */
+.tong-set{display:flex;gap:10px;width:min(100%,560px);justify-content:center}
+.tong{
+  flex:1 1 0;min-width:0;border-radius:22px;padding:12px 8px 10px;text-align:center;
+  background:rgba(255,255,255,.08);border:3px solid rgba(255,255,255,.18);
+  transition:transform .2s, box-shadow .2s, background .2s, border-color .2s;
+}
+.tong .ikon{font-size:clamp(26px,7vw,36px);line-height:1.1}
+.tong .nama{font-family:var(--papar);font-weight:800;font-size:clamp(14px,3.6vw,18px);margin-top:2px}
+.tong .kadar{
+  height:9px;border-radius:99px;background:rgba(0,0,0,.35);margin-top:8px;overflow:hidden;
+}
+.tong .kadar i{display:block;height:100%;width:0%;border-radius:99px;transition:width .15s linear}
+.tong[data-jenis=logam] .kadar i{background:var(--logam)}
+.tong[data-jenis=kertas] .kadar i{background:var(--kertas)}
+.tong[data-jenis=plastik] .kadar i{background:var(--plastik)}
+.tong.aktif{transform:translateY(-6px) scale(1.04)}
+.tong[data-jenis=logam].aktif{background:var(--logam);border-color:#fff;box-shadow:0 10px 26px rgba(30,127,214,.6)}
+.tong[data-jenis=kertas].aktif{background:var(--kertas);border-color:#fff;color:#4A3600;box-shadow:0 10px 26px rgba(245,194,11,.55)}
+.tong[data-jenis=plastik].aktif{background:var(--plastik);border-color:#fff;box-shadow:0 10px 26px rgba(226,59,46,.55)}
+ 
+/* ---------- papar keputusan ---------- */
+#keputusan{
+  position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;
+  animation:masuk .35s cubic-bezier(.2,1.4,.5,1);
+}
+@keyframes masuk{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+#keputusan .ikonBesar{font-size:clamp(90px,26vw,190px);line-height:1;animation:lompat .7s cubic-bezier(.2,1.5,.4,1) 2}
+@keyframes lompat{0%,100%{transform:translateY(0)}45%{transform:translateY(-26px)}}
+#keputusan .label{font-family:var(--papar);font-weight:800;font-size:clamp(40px,12vw,92px);line-height:1;text-shadow:0 6px 0 rgba(0,0,0,.22)}
+#keputusan .pesan{font-family:var(--papar);font-weight:600;font-size:clamp(20px,5.4vw,32px);max-width:18ch}
+#keputusan .warna-kata{
+  display:inline-block;background:rgba(0,0,0,.28);border-radius:14px;padding:2px 14px;margin-top:4px;
+}
+#keputusan .yakin{font-size:15px;opacity:.85;letter-spacing:.3px}
+#konfeti{position:fixed;inset:0;z-index:45;pointer-events:none}
+ 
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}
+@media (max-height:640px){
+  .bingkai{width:min(62vw,44vh)}
+  .tong .ikon{font-size:24px}
+}
+</style>
+</head>
+<body>
+ 
+<!-- ====== SKRIN MULA ====== -->
+<div class="skrin" id="skrinMula">
+  <div class="maskot">♻️</div>
+  <h1 class="jenama">
+    <span class="besar">Tong Pintar</span>
+    <span class="kecil">Tunjuk sampah kamu, saya beritahu tong mana!</span>
+  </h1>
+  <button class="butang" id="btnMula">Mula imbas</button>
+  <p class="nota">Benarkan penggunaan kamera apabila diminta. Pegang sampah di hadapan kamera sehingga warna tong muncul.</p>
+</div>
+ 
+<!-- ====== SKRIN IMBAS ====== -->
+<div class="skrin sembunyi" id="skrinImbas">
+  <div class="bar-atas">
+    <div class="tajuk-kecil">Tong Pintar ♻️</div>
+    <div class="bintang"><span>⭐</span><span class="n" id="markah">0</span></div>
+  </div>
+ 
+  <div class="bingkai" id="bingkai">
+    <div class="pemuat" id="pemuat">
+      <div class="pusing"></div>
+      <div>Menghidupkan kamera…</div>
+    </div>
+    <span class="sudut a"></span><span class="sudut b"></span>
+    <span class="sudut c"></span><span class="sudut d"></span>
+  </div>
+ 
+  <p class="arahan" id="arahan">Tunjukkan sampah kamu di hadapan kamera</p>
+ 
+  <div class="tong-set">
+    <div class="tong" data-jenis="logam">
+      <div class="ikon">🥫</div>
+      <div class="nama">Logam / Tin</div>
+      <div class="kadar"><i></i></div>
+    </div>
+    <div class="tong" data-jenis="kertas">
+      <div class="ikon">📦</div>
+      <div class="nama">Kertas / Kotak</div>
+      <div class="kadar"><i></i></div>
+    </div>
+    <div class="tong" data-jenis="plastik">
+      <div class="ikon">🍶</div>
+      <div class="nama">Plastik / Botol</div>
+      <div class="kadar"><i></i></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ====== PAPARAN KEPUTUSAN ====== -->
+<div id="keputusan" class="sembunyi"></div>
+<canvas id="konfeti" class="sembunyi"></canvas>
+ 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js"></script>
+<script>
+/* =========================================================
+   TETAPAN
+   ========================================================= */
+const URL_MODEL = "https://teachablemachine.withgoogle.com/models/b7ynQ33kX/";
+ 
+// Kelas 1 = logam, Kelas 2 = kertas, Kelas 3 = plastik (ikut susunan dalam model)
+const KATEGORI = {
+  logam:   { nama:"LOGAM",   warnaNama:"BIRU",   hex:"#1E7FD6", gelap:"#0F4F8A", teks:"#FFFFFF", ikon:"🥫",
+             pesan:"Masukkan ke dalam tong BIRU", suara:"Ini logam! Masukkan ke dalam tong biru." },
+  kertas:  { nama:"KERTAS",  warnaNama:"KUNING", hex:"#F5C20B", gelap:"#A67C00", teks:"#4A3600", ikon:"📦",
+             pesan:"Masukkan ke dalam tong KUNING", suara:"Ini kertas! Masukkan ke dalam tong kuning." },
+  plastik: { nama:"PLASTIK", warnaNama:"MERAH",  hex:"#E23B2E", gelap:"#95170D", teks:"#FFFFFF", ikon:"🍶",
+             pesan:"Masukkan ke dalam tong MERAH", suara:"Ini plastik! Masukkan ke dalam tong merah." }
+};
+ 
+const AMBANG      = 0.80; // keyakinan minimum
+const FRAME_STABIL= 10;   // bilangan frame berturut sebelum disahkan
+const TEMPOH_PAPAR= 4200; // milisaat paparan keputusan
+const REHAT       = 1200; // rehat selepas paparan sebelum imbas semula
+ 
+/* =========================================================
+   PADANAN NAMA KELAS -> KATEGORI
+   ========================================================= */
+const KUNCI = {
+  logam:   ["logam","metal","tin","can","aluminium","aluminum","besi"],
+  kertas:  ["kertas","paper","kotak","box","card","karton","carton"],
+  plastik: ["plastik","plastic","botol","bottle","makanan","food"]
+};
+const IKUT_INDEKS = ["logam","kertas","plastik"];
+ 
+function petakan(namaKelas, indeks){
+  const n = String(namaKelas || "").toLowerCase();
+  for (const jenis of Object.keys(KUNCI)){
+    if (KUNCI[jenis].some(k => n.includes(k))) return jenis;
+  }
+  return IKUT_INDEKS[indeks] || null; // sandaran: ikut susunan kelas
+}
+ 
+/* =========================================================
+   KEADAAN
+   ========================================================= */
+let model, webcam, maxKelas, petaKelas = [];
+let berjalan = false, dijeda = false;
+let calon = null, kiraStabil = 0, markah = 0;
+ 
+const el = {
+  skrinMula: document.getElementById("skrinMula"),
+  skrinImbas: document.getElementById("skrinImbas"),
+  btnMula: document.getElementById("btnMula"),
+  bingkai: document.getElementById("bingkai"),
+  pemuat: document.getElementById("pemuat"),
+  arahan: document.getElementById("arahan"),
+  markah: document.getElementById("markah"),
+  keputusan: document.getElementById("keputusan"),
+  konfeti: document.getElementById("konfeti")
+};
+const tongEl = {};
+document.querySelectorAll(".tong").forEach(t => tongEl[t.dataset.jenis] = t);
+ 
+/* =========================================================
+   MULA
+   ========================================================= */
+el.btnMula.addEventListener("click", mulakan);
+ 
+async function mulakan(){
+  el.skrinMula.classList.add("sembunyi");
+  el.skrinImbas.classList.remove("sembunyi");
+  bukaAudio();
+ 
+  try{
+    model = await tmImage.load(URL_MODEL + "model.json", URL_MODEL + "metadata.json");
+    maxKelas = model.getTotalClasses();
+    const namaKelas = model.getClassLabels ? model.getClassLabels() : [];
+    petaKelas = [];
+    for (let i = 0; i < maxKelas; i++) petaKelas[i] = petakan(namaKelas[i], i);
+  }catch(e){
+    ralat("Model tidak dapat dimuatkan. Periksa sambungan internet, kemudian muat semula halaman.");
+    return;
+  }
+ 
+  // --- kamera hadapan (laptop) ---
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    ralat("Pelayar ini tidak menyokong kamera. Buka fail ini dengan Chrome, Edge atau Firefox versi terkini.");
+    return;
+  }
+ 
+  const saiz = 400;
+  webcam = new tmImage.Webcam(saiz, saiz, true); // true = cermin (macam bercermin muka)
+ 
+  // cuba beberapa tetapan: kamera hadapan dahulu, kemudian kamera lalai
+  const pilihan = [
+    { facingMode: "user" },
+    { facingMode: { ideal: "user" } },
+    {}
+  ];
+ 
+  let berjaya = false, ralatAkhir = null;
+  for (const p of pilihan){
+    try{
+      await webcam.setup(p);
+      await webcam.play();
+      berjaya = true;
+      break;
+    }catch(e){ ralatAkhir = e; }
+  }
+ 
+  if (!berjaya){
+    const n = ralatAkhir && ralatAkhir.name;
+    if (n === "NotAllowedError" || n === "SecurityError"){
+      ralat("Akses kamera disekat. Klik ikon kamera 🎥 pada bar alamat pelayar, pilih \"Allow\", kemudian muat semula halaman.");
+    } else if (n === "NotFoundError" || n === "OverconstrainedError"){
+      ralat("Tiada kamera dijumpai. Pastikan kamera laptop tidak ditutup atau sedang digunakan oleh aplikasi lain.");
+    } else if (n === "NotReadableError"){
+      ralat("Kamera sedang digunakan oleh aplikasi lain. Tutup Zoom, Teams atau Meet, kemudian muat semula halaman.");
+    } else if (location.protocol === "file:"){
+      ralat("Kamera perlu dibuka melalui pelayan tempatan. Lihat arahan menjalankan fail ini di localhost.");
+    } else {
+      ralat("Kamera tidak dapat dibuka. Muat semula halaman dan benarkan akses kamera.");
+    }
+    return;
+  }
+ 
+  if (el.pemuat.parentNode) el.pemuat.remove();
+  el.bingkai.prepend(webcam.canvas);
+  berjalan = true;
+  requestAnimationFrame(gelung);
+}
+ 
+function ralat(mesej){
+  el.pemuat.innerHTML = '<div style="font-size:40px">📷</div>' +
+    '<div style="max-width:24ch;line-height:1.5;font-size:16px;font-family:var(--teks)">' + mesej + '</div>';
+}
+ 
+/* =========================================================
+   GELUNG RAMALAN
+   ========================================================= */
+async function gelung(){
+  if (!berjalan) return;
+  webcam.update();
+  if (!dijeda) await ramal();
+  requestAnimationFrame(gelung);
+}
+ 
+async function ramal(){
+  const hasil = await model.predict(webcam.canvas);
+ 
+  // kumpul kebarangkalian mengikut kategori
+  const skor = { logam:0, kertas:0, plastik:0 };
+  hasil.forEach((r,i) => {
+    const jenis = petaKelas[i];
+    if (jenis && skor[jenis] !== undefined) skor[jenis] = Math.max(skor[jenis], r.probability);
+  });
+ 
+  // kemas kini bar
+  let teratas = null, nilaiTeratas = 0;
+  for (const jenis of Object.keys(skor)){
+    const p = skor[jenis];
+    tongEl[jenis].querySelector(".kadar i").style.width = (p*100).toFixed(1) + "%";
+    tongEl[jenis].classList.toggle("aktif", p >= AMBANG);
+    if (p > nilaiTeratas){ nilaiTeratas = p; teratas = jenis; }
+  }
+ 
+  // pengesahan stabil
+  if (teratas && nilaiTeratas >= AMBANG){
+    if (calon === teratas) kiraStabil++;
+    else { calon = teratas; kiraStabil = 1; }
+ 
+    el.arahan.textContent = "Jangan bergerak… sedang mengesan";
+    if (kiraStabil >= FRAME_STABIL) sahkan(calon, nilaiTeratas);
+  }else{
+    calon = null; kiraStabil = 0;
+    el.arahan.textContent = "Tunjukkan sampah kamu di hadapan kamera";
+  }
+}
+ 
+/* =========================================================
+   PAPARAN KEPUTUSAN
+   ========================================================= */
+function sahkan(jenis, keyakinan){
+  dijeda = true;
+  calon = null; kiraStabil = 0;
+ 
+  const k = KATEGORI[jenis];
+  markah++;
+  el.markah.textContent = markah;
+ 
+  el.keputusan.style.background =
+    "radial-gradient(120% 90% at 50% 15%, " + k.hex + " 0%, " + k.gelap + " 100%)";
+  el.keputusan.style.color = k.teks;
+  el.keputusan.innerHTML =
+    '<div class="ikonBesar">' + k.ikon + '</div>' +
+    '<div class="label">' + k.nama + '</div>' +
+    '<div class="pesan">Masukkan ke dalam tong<br><span class="warna-kata">' + k.warnaNama + '</span></div>' +
+    '<div class="yakin">Ketepatan ' + Math.round(keyakinan*100) + '% &nbsp;•&nbsp; +1 ⭐ Terima kasih, wira alam sekitar!</div>';
+  el.keputusan.classList.remove("sembunyi");
+ 
+  bunyiJaya();
+  cakap(k.suara);
+  konfeti(k.hex);
+ 
+  setTimeout(() => {
+    el.keputusan.classList.add("sembunyi");
+    el.arahan.textContent = "Bagus! Tunjuk sampah seterusnya";
+    Object.values(tongEl).forEach(t => t.classList.remove("aktif"));
+    setTimeout(() => { dijeda = false; }, REHAT);
+  }, TEMPOH_PAPAR);
+}
+ 
+/* =========================================================
+   BUNYI
+   ========================================================= */
+let ac = null;
+function bukaAudio(){
+  try{ ac = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){}
+}
+function bunyiJaya(){
+  if (!ac) return;
+  if (ac.state === "suspended") ac.resume();
+  [0,0.12,0.24,0.40].forEach((t,i) => {
+    const nada = [523.25, 659.25, 783.99, 1046.5][i];
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = "triangle"; o.frequency.value = nada;
+    g.gain.setValueAtTime(0.0001, ac.currentTime + t);
+    g.gain.exponentialRampToValueAtTime(0.25, ac.currentTime + t + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + t + 0.38);
+    o.connect(g).connect(ac.destination);
+    o.start(ac.currentTime + t); o.stop(ac.currentTime + t + 0.4);
+  });
+}
+function cakap(teks){
+  try{
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(teks);
+    u.lang = "ms-MY"; u.rate = 0.95; u.pitch = 1.2;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+ 
+/* =========================================================
+   KONFETI
+   ========================================================= */
+const kv = el.konfeti, kt = kv.getContext("2d");
+function saizKanvas(){ kv.width = innerWidth; kv.height = innerHeight; }
+addEventListener("resize", saizKanvas); saizKanvas();
+ 
+function konfeti(warnaUtama){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  kv.classList.remove("sembunyi");
+  const warna = [warnaUtama, "#FFFFFF", "#C4F03A", "#35C05B"];
+  const zarah = Array.from({length:140}, () => ({
+    x: kv.width/2 + (Math.random()-0.5)*kv.width*0.6,
+    y: kv.height*0.35 + (Math.random()-0.5)*80,
+    vx: (Math.random()-0.5)*9,
+    vy: Math.random()*-11 - 3,
+    s: 6 + Math.random()*8,
+    r: Math.random()*Math.PI,
+    vr: (Math.random()-0.5)*0.3,
+    w: warna[(Math.random()*warna.length)|0]
+  }));
+  const mula = performance.now();
+  (function anim(t){
+    const lalu = t - mula;
+    kt.clearRect(0,0,kv.width,kv.height);
+    zarah.forEach(p => {
+      p.vy += 0.32; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      kt.save(); kt.translate(p.x,p.y); kt.rotate(p.r);
+      kt.globalAlpha = Math.max(0, 1 - lalu/2600);
+      kt.fillStyle = p.w; kt.fillRect(-p.s/2, -p.s/2, p.s, p.s*0.6);
+      kt.restore();
+    });
+    if (lalu < 2600) requestAnimationFrame(anim);
+    else { kt.clearRect(0,0,kv.width,kv.height); kv.classList.add("sembunyi"); }
+  })(mula);
+}
+ 
+/* amaran awal: kamera disekat jika dibuka terus dari file:// */
+if (location.protocol === "file:"){
+  const n = document.createElement("p");
+  n.className = "nota";
+  n.style.cssText = "background:rgba(226,59,46,.9);color:#fff;border-radius:16px;padding:12px 16px;max-width:38ch;font-weight:700";
+  n.innerHTML = "Halaman ini dibuka terus dari fail, jadi pelayar akan menyekat kamera.<br><br>" +
+                "Buka Terminal / Command Prompt dalam folder fail ini, taip:<br>" +
+                "<code style='background:rgba(0,0,0,.35);padding:2px 8px;border-radius:8px;display:inline-block;margin-top:6px'>python -m http.server 8000</code><br><br>" +
+                "Kemudian layari <b>http://localhost:8000/kiosk-kitar-semula.html</b>";
+  document.getElementById("skrinMula").appendChild(n);
+}
+ 
+/* skrin sentiasa hidup untuk kiosk */
+(async () => { try{ await navigator.wakeLock.request("screen"); }catch(e){} })();
+</script>
+</body>
+</html>
