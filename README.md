@@ -17,7 +17,7 @@ Model yang telah dilatih kemudiannya diintegrasikan ke dalam aplikasi supaya pen
 
 1. Membangunkan model AI Image Classification untuk mengenal pasti tiga kategori bahan kitar semula.
 2. Menguji model menggunakan imej baharu dan menilai keputusan prediction serta confidence score.
-3. Membangunkan aplikasi yang membolehkan pengguna memasukkan imej atau menggunakan webcam untuk mendapatkan keputusan klasifikasi.
+3. Membangunkan aplikasi yang membolehkan pengguna mengesan objek menggunakan webcam untuk mendapatkan keputusan klasifikasi.
 
 ## ♻️ Kelas Bahan Kitar Semula
 
@@ -29,13 +29,11 @@ Model yang telah dilatih kemudiannya diintegrasikan ke dalam aplikasi supaya pen
 
 ## ⚙️ Fungsi Sistem
 
-* 📷 **Upload Image** – Pengguna boleh memasukkan imej bahan kitar semula.
 * 📹 **Webcam** – Pengguna boleh memberikan input melalui kamera.
 * 🤖 **AI Prediction** – Model AI menganalisis imej yang diberikan.
 * 📊 **Confidence Score** – Sistem memaparkan tahap keyakinan prediction.
 * 🏷️ **Class Result** – Sistem memaparkan kategori bahan yang dikenal pasti.
 * 🔄 **Reset** – Pengguna boleh membuat prediction baharu.
-* ⚠️ **Low Confidence Handling** – Sistem memberikan status yang sesuai apabila confidence terlalu rendah.
 
 ## 🧠 Teknologi Yang Digunakan
 
@@ -45,10 +43,8 @@ Model yang telah dilatih kemudiannya diintegrasikan ke dalam aplikasi supaya pen
 * Google Teachable Machine
 * TensorFlow.js
 * HTML
-* CSS
-* JavaScript
 * Visual Studio Code
-* Git & GitHub
+* GitHub
 
 Model digunakan secara **client-side melalui TensorFlow.js**, jadi versi semasa tidak memerlukan backend Python untuk menjalankan inferens.
 
@@ -156,35 +152,22 @@ Object-Detection/
 git clone https://github.com/shahqri/Object-Detection.git
 ```
 
-### 2. Buka Folder Projek
-
-```bash
-cd Object-Detection
-```
-
-### 3. Jalankan Aplikasi
+### 2. Buka Fail Projek
 
 Buka fail:
 
 ```text
-index.html
+Object-Detection.html
 ```
 
-atau jalankan menggunakan **Live Server** dalam Visual Studio Code.
+### 3. Jalankan Aplikasi
+
 
 ### 4. Berikan Input
 
 * Gunakan webcam
 
 Sistem akan memproses objek dan memaparkan kategori bahan serta confidence score.
-
-## 📷 Contoh Output
-
-Tambahkan screenshot aplikasi dan keputusan prediction di sini.
-
-```markdown
-![SmartVision AI](images/result.png)
-```
 
 ## 🐙 GitHub
 
